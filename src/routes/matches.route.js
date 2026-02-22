@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   createMatchSchema,
   listMatchesQuerySchema,
-} from '../validation/matches.js';
+} from '../validation/matches.validation.js';
 import { db } from '../db/db.js';
 import { getMatchStatus } from '../utils/matche-status.js';
 import { matches } from '../db/schema.js';
@@ -63,6 +63,10 @@ matchRouter.post('/', async (req, res) => {
         status: getMatchStatus(startTime, endTime),
       })
       .returning();
+
+    if (res.app.locals.broadcastMatchCreated) {
+      res.app.locals.broadcastMatchCreated(event);
+    }
 
     res.status(201).json({ data: event, message: 'Match Created' });
   } catch (error) {
