@@ -10,7 +10,7 @@ export const listMatchesQuerySchema = z.object({
   limit: z.coerce.number().int().positive().max(100).optional(),
 });
 
-export const matrchIdParamSchema = z.object({
+export const matchIdParamSchema = z.object({
   id: z.coerce.number().int().positive(),
 });
 
